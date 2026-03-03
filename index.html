@@ -3,355 +3,215 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Annual Black Tie Gala — Seating</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<title>PCMA Foundation Visionary Awards - Seating</title>
+<link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-  :root {
-    --gold: #C9A84C;
-    --gold-light: #E8D5A3;
-    --gold-dark: #8B6914;
-    --black: #0A0A0A;
-    --charcoal: #1A1A1A;
-    --ivory: #F5F0E8;
-    --ivory-dim: #D4CCBC;
-  }
-
-  body {
-    font-family: 'Cormorant Garamond', serif;
-    background: var(--black);
-    color: var(--ivory);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background:
-      radial-gradient(ellipse at 20% 0%, rgba(201,168,76,0.06) 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 100%, rgba(201,168,76,0.04) 0%, transparent 60%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .container {
-    position: relative;
-    z-index: 1;
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 60px 24px 80px;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .ornament {
-    width: 80px;
-    height: 1px;
-    background: var(--gold);
-    margin: 0 auto;
-    position: relative;
-  }
-  .ornament::before {
-    content: '◆';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: var(--black);
-    padding: 0 12px;
-    color: var(--gold);
-    font-size: 8px;
-    letter-spacing: 4px;
-  }
-
-  .event-year {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 300;
-    font-size: 13px;
-    letter-spacing: 6px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-top: 40px;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.2s forwards;
-  }
-
-  h1 {
-    font-family: 'Playfair Display', serif;
-    font-weight: 400;
-    font-size: clamp(32px, 8vw, 48px);
-    text-align: center;
-    margin: 16px 0 8px;
-    line-height: 1.15;
-    letter-spacing: -0.5px;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.4s forwards;
-  }
-
-  .subtitle {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 300;
-    font-size: 12px;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    color: var(--ivory-dim);
-    margin-bottom: 48px;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.6s forwards;
-  }
-
-  .loading {
-    text-align: center;
-    padding: 40px 0;
-  }
-  .loading p {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 300;
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gold);
-  }
-  .loading-dots::after {
-    content: '';
-    animation: dots 1.5s steps(4, end) infinite;
-  }
-  @keyframes dots {
-    0% { content: ''; }
-    25% { content: '.'; }
-    50% { content: '..'; }
-    75% { content: '...'; }
-  }
-
-  .error-msg {
-    text-align: center;
-    color: #c97a4c;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 16px;
-    font-style: italic;
-    padding: 20px 0;
-    display: none;
-  }
-
-  .search-section {
-    width: 100%;
-    text-align: center;
-    opacity: 0;
-    animation: fadeUp 0.8s ease 0.2s forwards;
-  }
-
-  .search-label {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 300;
-    font-size: 11px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--gold-light);
-    margin-bottom: 20px;
-  }
-
-  .search-wrapper {
-    position: relative;
-    width: 100%;
-  }
-
-  .search-input {
-    width: 100%;
-    padding: 18px 24px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
-    font-weight: 400;
-    color: var(--ivory);
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(201,168,76,0.3);
-    border-radius: 0;
-    outline: none;
-    transition: all 0.4s ease;
-    letter-spacing: 0.5px;
-    text-align: center;
-  }
-  .search-input::placeholder {
-    color: rgba(245,240,232,0.25);
-    font-style: italic;
-  }
-  .search-input:focus {
-    border-color: var(--gold);
-    background: rgba(255,255,255,0.06);
-    box-shadow: 0 0 30px rgba(201,168,76,0.08);
-  }
-
-  .result-card {
-    width: 100%;
-    margin-top: 40px;
-    opacity: 0;
-    transform: translateY(16px);
-    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-    pointer-events: none;
-  }
-  .result-card.visible {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-
-  .result-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 28px;
-    font-weight: 400;
-    text-align: center;
-    margin-bottom: 32px;
-    color: var(--ivory);
-  }
-
-  .assignments {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1px;
-    background: rgba(201,168,76,0.2);
-    border: 1px solid rgba(201,168,76,0.2);
-  }
-
-  .assignment {
-    background: var(--charcoal);
-    padding: 32px 20px;
-    text-align: center;
-    transition: background 0.3s ease;
-  }
-  .assignment:hover {
-    background: rgba(201,168,76,0.06);
-  }
-
-  .assignment-label {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
-    font-size: 10px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 12px;
-  }
-
-  .assignment-event {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: 13px;
-    color: var(--ivory-dim);
-    margin-bottom: 8px;
-  }
-
-  .assignment-value {
-    font-family: 'Playfair Display', serif;
-    font-size: 42px;
-    font-weight: 700;
-    color: var(--gold-light);
-    line-height: 1;
-  }
-
-  .assignment-type {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 300;
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--ivory-dim);
-    margin-top: 6px;
-  }
-
-  .suggestions {
-    width: 100%;
-    background: var(--charcoal);
-    border: 1px solid rgba(201,168,76,0.2);
-    border-top: none;
-    max-height: 240px;
-    overflow-y: auto;
-    display: none;
-  }
-  .suggestions.active { display: block; }
-
-  .suggestion-item {
-    padding: 14px 24px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    text-align: center;
-  }
-  .suggestion-item:hover,
-  .suggestion-item.active {
-    background: rgba(201,168,76,0.1);
-    color: var(--gold-light);
-  }
-  .suggestion-item:last-child { border-bottom: none; }
-
-  .no-result {
-    text-align: center;
-    margin-top: 40px;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-  }
-  .no-result.visible { opacity: 1; }
-  .no-result p {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 18px;
-    color: var(--ivory-dim);
-    font-style: italic;
-  }
-
-  .footer-note {
-    margin-top: auto;
-    padding-top: 60px;
-    text-align: center;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 300;
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: rgba(245,240,232,0.2);
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .suggestions::-webkit-scrollbar { width: 4px; }
-  .suggestions::-webkit-scrollbar-track { background: var(--charcoal); }
-  .suggestions::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#D4A843;--gold-bright:#F0C95C;--gold-light:#E8D5A3;--gold-muted:#A68A3E;
+  --amber:#C4902A;--black:#0A0A0A;--charcoal:#1C1918;--charcoal-light:#2A2625;
+  --white:#FFFFFF;--white-dim:#E8E4DD;--white-muted:#B0AAA0;
+}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--black);
+  color:var(--white);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+.page-bg{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse at 50% 110%,rgba(196,144,42,0.25) 0%,transparent 55%),
+    radial-gradient(ellipse at 50% 100%,rgba(212,168,67,0.12) 0%,transparent 70%),
+    radial-gradient(ellipse at 30% 80%,rgba(166,138,62,0.08) 0%,transparent 50%),
+    radial-gradient(ellipse at 70% 80%,rgba(166,138,62,0.08) 0%,transparent 50%),
+    linear-gradient(to bottom,#0A0A0A 0%,#0F0D0B 50%,#1A1510 80%,#1F1A12 100%);
+}
+.page-bg::after{
+  content:'';position:fixed;inset:0;opacity:0.03;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.container{
+  position:relative;z-index:1;max-width:560px;margin:0 auto;
+  padding:50px 24px 80px;min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;
+}
+.brand-label{
+  font-family:'DM Sans',sans-serif;font-weight:400;font-size:13px;
+  letter-spacing:5px;text-transform:uppercase;color:var(--gold);
+  opacity:0;animation:fadeUp .7s ease .1s forwards;
+}
+h1{
+  font-family:'Gabarito',sans-serif;font-weight:500;
+  font-size:clamp(26px,7vw,38px);text-align:center;
+  margin:14px 0 4px;line-height:1.2;letter-spacing:2px;
+  text-transform:uppercase;color:var(--white);
+  opacity:0;animation:fadeUp .7s ease .25s forwards;
+}
+.event-meta{
+  font-family:'DM Sans',sans-serif;font-weight:400;font-size:15px;
+  letter-spacing:3px;color:var(--gold-light);margin-top:10px;text-align:center;
+  opacity:0;animation:fadeUp .7s ease .4s forwards;
+}
+.presented-by{
+  font-family:'DM Sans',sans-serif;font-weight:400;font-size:12px;
+  letter-spacing:3px;text-transform:uppercase;color:var(--white-muted);margin-top:8px;
+  opacity:0;animation:fadeUp .7s ease .5s forwards;
+}
+.divider{
+  width:60px;height:1px;margin:32px auto;position:relative;
+  opacity:0;animation:fadeUp .7s ease .55s forwards;
+}
+.divider::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.search-section{
+  width:100%;text-align:center;
+  opacity:0;animation:fadeUp .7s ease .65s forwards;
+}
+.search-label{
+  font-family:'DM Sans',sans-serif;font-weight:400;font-size:13px;
+  letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:18px;
+}
+.search-wrapper{position:relative;width:100%}
+.search-input{
+  width:100%;padding:16px 24px;
+  font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;
+  color:var(--white);background:rgba(255,255,255,0.04);
+  border:1px solid rgba(212,168,67,0.25);border-radius:2px;
+  outline:none;transition:all .4s ease;letter-spacing:.5px;text-align:center;
+}
+.search-input::placeholder{color:rgba(255,255,255,0.2);font-style:italic}
+.search-input:focus{
+  border-color:var(--gold);background:rgba(255,255,255,0.06);
+  box-shadow:0 0 40px rgba(212,168,67,0.08),inset 0 0 20px rgba(212,168,67,0.03);
+}
+.search-input:disabled{opacity:.3;cursor:not-allowed}
+.result-card{
+  width:100%;margin-top:36px;opacity:0;transform:translateY(14px);
+  transition:all .6s cubic-bezier(.23,1,.32,1);pointer-events:none;
+}
+.result-card.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+.result-name{
+  font-family:'Gabarito',sans-serif;font-size:26px;font-weight:500;
+  text-align:center;margin-bottom:28px;color:var(--white);letter-spacing:1px;
+}
+.result-org{
+  font-family:'DM Sans',sans-serif;font-weight:400;font-size:14px;
+  text-align:center;margin-bottom:24px;margin-top:-16px;
+  color:var(--gold-light);letter-spacing:.5px;line-height:1.4;
+}
+.result-org-label{
+  font-family:'DM Sans',sans-serif;font-weight:500;font-size:10px;
+  letter-spacing:3px;text-transform:uppercase;color:var(--gold-muted);
+  display:block;margin-bottom:4px;
+}
+.assignments{
+  display:grid;grid-template-columns:1fr 1fr;gap:1px;
+  background:rgba(212,168,67,0.15);
+  border:1px solid rgba(212,168,67,0.15);border-radius:2px;overflow:hidden;
+}
+.assignment{
+  background:var(--charcoal);padding:30px 16px;text-align:center;
+  transition:background .3s ease;
+}
+.assignment:hover{background:var(--charcoal-light)}
+.assignment-label{
+  font-family:'DM Sans',sans-serif;font-weight:500;font-size:11px;
+  letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;
+}
+.assignment-event{
+  font-family:'DM Sans',sans-serif;font-weight:400;font-size:13px;
+  color:var(--white-muted);margin-bottom:10px;
+}
+.assignment-value{
+  font-family:'Gabarito',sans-serif;font-size:44px;font-weight:600;
+  color:var(--gold-bright);line-height:1;
+  text-shadow:0 0 30px rgba(240,201,92,0.15);
+}
+.assignment-type{
+  font-family:'DM Sans',sans-serif;font-weight:400;font-size:12px;
+  letter-spacing:3px;text-transform:uppercase;color:var(--white-muted);margin-top:8px;
+}
+.suggestions{
+  width:100%;background:var(--charcoal);
+  border:1px solid rgba(212,168,67,0.15);border-top:none;
+  border-radius:0 0 2px 2px;max-height:240px;overflow-y:auto;display:none;
+}
+.suggestions.active{display:block}
+.suggestion-item{
+  padding:14px 24px;font-family:'DM Sans',sans-serif;font-size:17px;
+  cursor:pointer;transition:all .2s ease;
+  border-bottom:1px solid rgba(255,255,255,0.03);text-align:center;color:var(--white-dim);
+}
+.suggestion-item:hover,.suggestion-item.active{
+  background:rgba(212,168,67,0.08);color:var(--gold-bright);
+}
+.suggestion-item:last-child{border-bottom:none}
+.no-result{text-align:center;margin-top:36px;opacity:0;transition:opacity .4s ease}
+.no-result.visible{opacity:1}
+.no-result p{
+  font-family:'Cormorant Garamond',serif;font-size:18px;
+  color:var(--white-muted);font-style:italic;line-height:1.6;
+}
+.loading{text-align:center;margin-top:18px}
+.loading p{
+  font-family:'DM Sans',sans-serif;font-weight:300;font-size:10px;
+  letter-spacing:3px;text-transform:uppercase;color:var(--gold-muted);
+  animation:pulse 1.5s ease-in-out infinite;
+}
+.loading.hidden{display:none}
+.error-msg{text-align:center;margin-top:18px;display:none}
+.error-msg.visible{display:block}
+.error-msg p{
+  font-family:'Cormorant Garamond',serif;font-size:15px;
+  color:#CC8866;font-style:italic;
+}
+.footer-note{
+  margin-top:auto;padding-top:50px;text-align:center;
+  font-family:'DM Sans',sans-serif;font-weight:400;font-size:11px;
+  letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.15);
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+.suggestions::-webkit-scrollbar{width:4px}
+.suggestions::-webkit-scrollbar-track{background:var(--charcoal)}
+.suggestions::-webkit-scrollbar-thumb{background:rgba(212,168,67,0.25);border-radius:2px}
+@media(max-width:420px){
+  .container{padding:40px 18px 60px}
+  .assignment{padding:24px 12px}
+  .assignment-value{font-size:36px}
+}
 </style>
 </head>
 <body>
-
+<div class="page-bg"></div>
 <div class="container">
-  <div class="ornament"></div>
-  <p class="event-year">2026</p>
-  <h1>Annual Black Tie Gala</h1>
-  <p class="subtitle">Seating Arrangements</p>
-
-  <div class="loading" id="loading">
-    <p>Loading guest list<span class="loading-dots"></span></p>
-  </div>
-
-  <p class="error-msg" id="errorMsg">
-    Unable to load the guest list.<br>Please ask a staff member for assistance.
-  </p>
-
-  <div class="search-section" id="searchSection" style="display:none;">
-    <p class="search-label">Enter your name</p>
+  <p class="brand-label">PCMA Foundation</p>
+  <h1>Visionary Awards</h1>
+  <p class="event-meta">May 7, 2026 &ensp;|&ensp; Washington, DC</p>
+  <p class="presented-by">Presented by Visit Austin &amp; Austin Convention Center</p>
+  <div class="divider"></div>
+  <div class="search-section" id="searchSection">
+    <p class="search-label">Find your seat</p>
     <div class="search-wrapper">
       <input type="text" class="search-input" id="searchInput"
-        placeholder="First and Last Name" autocomplete="off" spellcheck="false" />
+        placeholder="Enter your name" autocomplete="off" spellcheck="false" />
       <div class="suggestions" id="suggestions"></div>
     </div>
+    <div class="loading hidden" id="loading"><p>Loading guest list...</p></div>
+    <div class="error-msg" id="errorMsg">
+      <p>Unable to load the guest list.<br>Please check with the registration desk.</p>
+    </div>
   </div>
-
   <div class="result-card" id="resultCard">
     <p class="result-name" id="resultName"></p>
+    <p class="result-org" id="resultOrg"></p>
     <div class="assignments">
       <div class="assignment">
         <p class="assignment-label">Award Ceremony</p>
@@ -367,209 +227,139 @@
       </div>
     </div>
   </div>
-
   <div class="no-result" id="noResult">
     <p>No guest found by that name.<br>Please check with the registration desk.</p>
   </div>
-
   <p class="footer-note">If you need assistance, please see the registration desk</p>
 </div>
-
 <script>
-  // =====================================================
-  //  SETUP INSTRUCTIONS
-  // =====================================================
-  //
-  //  1. Create a Google Sheet with 3 columns:
-  //       Name  |  Row  |  Table
-  //
-  //  2. Go to File → Share → Publish to web
-  //     - Choose the sheet tab with your guest list
-  //     - Select "Comma-separated values (.csv)"
-  //     - Click Publish
-  //
-  //  3. Copy the URL it gives you and paste it below:
-  //
-  // =====================================================
+const USE_GOOGLE_SHEETS = false;
+const GOOGLE_SHEET_CSV_URL = 'YOUR_PUBLISHED_CSV_URL_HERE';
+const REFRESH_INTERVAL_MS = 60000;
 
-  // To switch to Google Sheets later, set USE_GOOGLE_SHEETS = true
-  // and paste your published CSV URL below:
-  const USE_GOOGLE_SHEETS = false;
-  const GOOGLE_SHEET_CSV_URL = 'YOUR_PUBLISHED_CSV_URL_HERE';
+const SAMPLE_GUESTS = [
+  {name:"Alexander Bennett",row:"A",table:"1",org:"Hilton"},
+  {name:"Amelia Thornton",row:"A",table:"1",org:"Hilton"},
+  {name:"Benjamin Hargrove",row:"A",table:"2",org:"Destination DC"},
+  {name:"Caroline Ashford",row:"B",table:"2",org:"Destination DC"},
+  {name:"David Kensington",row:"B",table:"3",org:"MGM Resorts International"},
+  {name:"Eleanor Whitmore",row:"B",table:"3",org:"MGM Resorts International"},
+  {name:"Frederick Holloway",row:"C",table:"4",org:"Choose Chicago"},
+  {name:"Grace Pemberton",row:"C",table:"4",org:"Choose Chicago"},
+  {name:"Harrison Caldwell",row:"C",table:"5",org:"Freeman"},
+  {name:"Isabella Montague",row:"D",table:"5",org:"Freeman"},
+  {name:"James Worthington",row:"D",table:"6",org:"Caesars Entertainment"},
+  {name:"Katherine Fairchild",row:"D",table:"6",org:"Caesars Entertainment"},
+  {name:"Lawrence Sinclair",row:"E",table:"7",org:"Hyatt Convention Alliance"},
+  {name:"Margaret Ellsworth",row:"E",table:"7",org:"Hyatt Convention Alliance"},
+  {name:"Nathaniel Prescott",row:"E",table:"8",org:"New Orleans & Company"},
+  {name:"Olivia Ravenswood",row:"F",table:"8",org:"New Orleans & Company"},
+  {name:"Patrick Dunmore",row:"F",table:"9",org:"Discover Atlanta & GWCC Authority"},
+  {name:"Rebecca Stanhope",row:"F",table:"9",org:"Discover Atlanta & GWCC Authority"},
+  {name:"Samuel Blackwood",row:"G",table:"10",org:"Las Vegas Convention and Visitors Authority"},
+  {name:"Victoria Langley",row:"G",table:"10",org:"Las Vegas Convention and Visitors Authority"}
+];
 
-  // =====================================================
+let guests=[];
+const searchInput=document.getElementById('searchInput');
+const suggestionsEl=document.getElementById('suggestions');
+const resultCard=document.getElementById('resultCard');
+const noResult=document.getElementById('noResult');
+const resultName=document.getElementById('resultName');
+const rowValue=document.getElementById('rowValue');
+const tableValue=document.getElementById('tableValue');
+const loadingEl=document.getElementById('loading');
+const errorMsg=document.getElementById('errorMsg');
+let activeSuggestion=-1;
 
-  const SAMPLE_GUESTS = [
-    { name: "Alexander Bennett", row: "A", table: "1" },
-    { name: "Amelia Thornton", row: "A", table: "1" },
-    { name: "Benjamin Hargrove", row: "A", table: "2" },
-    { name: "Caroline Ashford", row: "B", table: "2" },
-    { name: "David Kensington", row: "B", table: "3" },
-    { name: "Eleanor Whitmore", row: "B", table: "3" },
-    { name: "Frederick Holloway", row: "C", table: "4" },
-    { name: "Grace Pemberton", row: "C", table: "4" },
-    { name: "Harrison Caldwell", row: "C", table: "5" },
-    { name: "Isabella Montague", row: "D", table: "5" },
-    { name: "James Worthington", row: "D", table: "6" },
-    { name: "Katherine Fairchild", row: "D", table: "6" },
-    { name: "Lawrence Sinclair", row: "E", table: "7" },
-    { name: "Margaret Ellsworth", row: "E", table: "7" },
-    { name: "Nathaniel Prescott", row: "E", table: "8" },
-    { name: "Olivia Ravenswood", row: "F", table: "8" },
-    { name: "Patrick Dunmore", row: "F", table: "9" },
-    { name: "Rebecca Stanhope", row: "F", table: "9" },
-    { name: "Samuel Blackwood", row: "G", table: "10" },
-    { name: "Victoria Langley", row: "G", table: "10" },
-  ];
+async function loadGuests(){
+  try{
+    if(USE_GOOGLE_SHEETS){
+      loadingEl.classList.remove('hidden');
+      const sep=GOOGLE_SHEET_CSV_URL.includes('?')?'&':'?';
+      const response=await fetch(GOOGLE_SHEET_CSV_URL+sep+'_t='+Date.now());
+      if(!response.ok) throw new Error('Fetch failed');
+      const csvText=await response.text();
+      const rows=csvText.trim().split('\n');
+      guests=rows.slice(1).map(row=>{
+        const cols=parseCSVRow(row);
+        return{name:(cols[0]||'').trim(),row:(cols[1]||'').trim(),table:(cols[2]||'').trim(),org:(cols[3]||'').trim()};
+      }).filter(g=>g.name);
+      loadingEl.classList.add('hidden');
+    }else{
+      guests=SAMPLE_GUESTS;
+    }
+    searchInput.focus();
+  }catch(err){
+    console.error('Error loading guests:',err);
+    loadingEl.classList.add('hidden');
+    errorMsg.style.display='block';
+  }
+}
 
-  let guests = [];
-
-  const searchInput = document.getElementById('searchInput');
-  const suggestionsEl = document.getElementById('suggestions');
-  const resultCard = document.getElementById('resultCard');
-  const noResult = document.getElementById('noResult');
-  const resultName = document.getElementById('resultName');
-  const rowValue = document.getElementById('rowValue');
-  const tableValue = document.getElementById('tableValue');
-  const loadingEl = document.getElementById('loading');
-  const errorMsg = document.getElementById('errorMsg');
-  const searchSection = document.getElementById('searchSection');
-
-  let activeSuggestion = -1;
-
-  // ─── Load guest data ───
-  async function loadGuests() {
-    try {
-      if (USE_GOOGLE_SHEETS) {
-        const response = await fetch(GOOGLE_SHEET_CSV_URL);
-        if (!response.ok) throw new Error('Fetch failed');
-        const csvText = await response.text();
-        const rows = csvText.trim().split('\n');
-        guests = rows.slice(1).map(row => {
-          const cols = parseCSVRow(row);
-          return {
-            name:  (cols[0] || '').trim(),
-            row:   (cols[1] || '').trim(),
-            table: (cols[2] || '').trim()
-          };
-        }).filter(g => g.name);
-      } else {
-        guests = SAMPLE_GUESTS;
-      }
-
-      loadingEl.style.display = 'none';
-      searchSection.style.display = '';
-      searchInput.focus();
-
-    } catch (err) {
-      console.error('Error loading guests:', err);
-      loadingEl.style.display = 'none';
-      errorMsg.style.display = 'block';
+function parseCSVRow(row){
+  const result=[];let current='';let inQuotes=false;
+  for(let i=0;i<row.length;i++){
+    const ch=row[i];
+    if(inQuotes){
+      if(ch==='"'&&row[i+1]==='"'){current+='"';i++;}
+      else if(ch==='"'){inQuotes=false;}
+      else{current+=ch;}
+    }else{
+      if(ch==='"'){inQuotes=true;}
+      else if(ch===','){result.push(current);current='';}
+      else{current+=ch;}
     }
   }
+  result.push(current);return result;
+}
 
-  function parseCSVRow(row) {
-    const result = [];
-    let current = '';
-    let inQuotes = false;
-    for (let i = 0; i < row.length; i++) {
-      const ch = row[i];
-      if (inQuotes) {
-        if (ch === '"' && row[i + 1] === '"') { current += '"'; i++; }
-        else if (ch === '"') { inQuotes = false; }
-        else { current += ch; }
-      } else {
-        if (ch === '"') { inQuotes = true; }
-        else if (ch === ',') { result.push(current); current = ''; }
-        else { current += ch; }
-      }
-    }
-    result.push(current);
-    return result;
-  }
-
-  // ─── Search ───
-  searchInput.addEventListener('input', () => {
-    const query = searchInput.value.trim().toLowerCase();
-    resultCard.classList.remove('visible');
-    noResult.classList.remove('visible');
-
-    if (query.length < 2) {
-      suggestionsEl.classList.remove('active');
-      suggestionsEl.innerHTML = '';
-      return;
-    }
-
-    const matches = guests.filter(g => g.name.toLowerCase().includes(query));
-
-    if (matches.length === 0) {
-      suggestionsEl.classList.remove('active');
-      suggestionsEl.innerHTML = '';
-      noResult.classList.add('visible');
-      return;
-    }
-
-    if (matches.length === 1 && matches[0].name.toLowerCase() === query) {
-      showResult(matches[0]);
-      suggestionsEl.classList.remove('active');
-      return;
-    }
-
-    activeSuggestion = -1;
-    suggestionsEl.innerHTML = matches.slice(0, 20).map((g, i) =>
-      `<div class="suggestion-item" data-index="${i}">${g.name}</div>`
-    ).join('');
-    suggestionsEl.classList.add('active');
-
-    suggestionsEl.querySelectorAll('.suggestion-item').forEach((el, i) => {
-      el.addEventListener('click', () => {
-        showResult(matches[i]);
-        searchInput.value = matches[i].name;
-        suggestionsEl.classList.remove('active');
-      });
-    });
+searchInput.addEventListener('input',()=>{
+  const query=searchInput.value.trim().toLowerCase();
+  resultCard.classList.remove('visible');
+  noResult.classList.remove('visible');
+  if(query.length<2){suggestionsEl.classList.remove('active');suggestionsEl.innerHTML='';return;}
+  const matches=guests.filter(g=>g.name.toLowerCase().includes(query));
+  if(matches.length===0){suggestionsEl.classList.remove('active');suggestionsEl.innerHTML='';noResult.classList.add('visible');return;}
+  if(matches.length===1&&matches[0].name.toLowerCase()===query){showResult(matches[0]);suggestionsEl.classList.remove('active');return;}
+  activeSuggestion=-1;
+  suggestionsEl.innerHTML=matches.slice(0,20).map((g,i)=>'<div class="suggestion-item" data-index="'+i+'">'+g.name+'</div>').join('');
+  suggestionsEl.classList.add('active');
+  suggestionsEl.querySelectorAll('.suggestion-item').forEach((el,i)=>{
+    el.addEventListener('click',()=>{showResult(matches[i]);searchInput.value=matches[i].name;suggestionsEl.classList.remove('active');});
   });
+});
 
-  searchInput.addEventListener('keydown', (e) => {
-    const items = suggestionsEl.querySelectorAll('.suggestion-item');
-    if (!items.length) return;
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      activeSuggestion = Math.min(activeSuggestion + 1, items.length - 1);
-      updateActive(items);
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      activeSuggestion = Math.max(activeSuggestion - 1, 0);
-      updateActive(items);
-    } else if (e.key === 'Enter' && activeSuggestion >= 0) {
-      e.preventDefault();
-      items[activeSuggestion].click();
-    }
-  });
+searchInput.addEventListener('keydown',(e)=>{
+  const items=suggestionsEl.querySelectorAll('.suggestion-item');
+  if(!items.length) return;
+  if(e.key==='ArrowDown'){e.preventDefault();activeSuggestion=Math.min(activeSuggestion+1,items.length-1);updateActive(items);}
+  else if(e.key==='ArrowUp'){e.preventDefault();activeSuggestion=Math.max(activeSuggestion-1,0);updateActive(items);}
+  else if(e.key==='Enter'&&activeSuggestion>=0){e.preventDefault();items[activeSuggestion].click();}
+});
 
-  function updateActive(items) {
-    items.forEach((el, i) => el.classList.toggle('active', i === activeSuggestion));
-    if (items[activeSuggestion]) items[activeSuggestion].scrollIntoView({ block: 'nearest' });
-  }
+function updateActive(items){
+  items.forEach((el,i)=>el.classList.toggle('active',i===activeSuggestion));
+  if(items[activeSuggestion]) items[activeSuggestion].scrollIntoView({block:'nearest'});
+}
 
-  function showResult(guest) {
-    resultName.textContent = guest.name;
-    rowValue.textContent = guest.row;
-    tableValue.textContent = guest.table;
-    resultCard.classList.add('visible');
-    noResult.classList.remove('visible');
-    suggestionsEl.classList.remove('active');
-  }
+function showResult(guest){
+  resultName.textContent=guest.name;
+  var orgEl=document.getElementById('resultOrg');
+  orgEl.innerHTML='<span class="result-org-label">Hosted by</span>'+guest.org;
+  rowValue.textContent=guest.row;
+  tableValue.textContent=guest.table;
+  resultCard.classList.add('visible');
+  noResult.classList.remove('visible');
+  suggestionsEl.classList.remove('active');
+}
 
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.search-wrapper')) {
-      suggestionsEl.classList.remove('active');
-    }
-  });
+document.addEventListener('click',(e)=>{
+  if(!e.target.closest('.search-wrapper')) suggestionsEl.classList.remove('active');
+});
 
-  // ─── Start ───
-  loadGuests();
+loadGuests();
+if(USE_GOOGLE_SHEETS) setInterval(()=>loadGuests(),REFRESH_INTERVAL_MS);
 </script>
-
 </body>
 </html>
