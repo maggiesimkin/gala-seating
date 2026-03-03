@@ -90,10 +90,9 @@ h1{
 }
 .search-input:disabled{opacity:.3;cursor:not-allowed}
 .result-card{
-  width:100%;margin-top:36px;opacity:0;transform:translateY(14px);
-  transition:all .6s cubic-bezier(.23,1,.32,1);pointer-events:none;
+  width:100%;margin-top:36px;display:none;
 }
-.result-card.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+.result-card.visible{display:block;animation:fadeUp .4s ease forwards}
 .result-name{
   font-family:'Gabarito',sans-serif;font-size:26px;font-weight:500;
   text-align:center;margin-bottom:28px;color:var(--white);letter-spacing:1px;
@@ -169,6 +168,64 @@ h1{
   font-family:'Cormorant Garamond',serif;font-size:15px;
   color:#CC8866;font-style:italic;
 }
+.search-tabs{
+  display:flex;justify-content:center;gap:0;margin-bottom:24px;
+  border:1px solid rgba(212,168,67,0.2);border-radius:2px;overflow:hidden;
+  max-width:280px;margin-left:auto;margin-right:auto;
+}
+.search-tab{
+  font-family:'DM Sans',sans-serif;font-weight:500;font-size:12px;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--white-muted);background:transparent;
+  border:none;padding:10px 24px;cursor:pointer;
+  transition:all .3s ease;flex:1;
+}
+.search-tab:hover{color:var(--gold-light)}
+.search-tab.active{
+  background:rgba(212,168,67,0.12);color:var(--gold-bright);
+}
+.host-results{
+  width:100%;margin-top:36px;display:none;
+}
+.host-results.visible{display:block}
+.host-results-title{
+  font-family:'Gabarito',sans-serif;font-size:20px;font-weight:500;
+  text-align:center;color:var(--white);margin-bottom:6px;
+}
+.host-results-subtitle{
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:400;
+  text-align:center;color:var(--gold-muted);margin-bottom:20px;letter-spacing:1px;
+}
+.host-table-card{
+  background:var(--charcoal);border:1px solid rgba(212,168,67,0.12);
+  border-radius:2px;padding:20px;margin-bottom:12px;
+}
+.host-table-header{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:14px;padding-bottom:12px;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+}
+.host-table-label{
+  font-family:'DM Sans',sans-serif;font-weight:500;font-size:10px;
+  letter-spacing:3px;text-transform:uppercase;color:var(--gold);
+}
+.host-table-nums{
+  font-family:'DM Sans',sans-serif;font-weight:400;font-size:13px;
+  color:var(--white-dim);
+}
+.host-table-nums strong{
+  color:var(--gold-bright);font-weight:600;
+}
+.host-guest-list{list-style:none;padding:0;margin:0}
+.host-guest-item{
+  font-family:'DM Sans',sans-serif;font-size:14px;font-weight:400;
+  color:var(--white-dim);padding:6px 0;
+  border-bottom:1px solid rgba(255,255,255,0.03);
+}
+.host-guest-item:last-child{border-bottom:none}
+.host-guest-row{
+  font-size:12px;color:var(--white-muted);margin-left:8px;
+}
 .footer-note{
   margin-top:auto;padding-top:50px;text-align:center;
   font-family:'DM Sans',sans-serif;font-weight:400;font-size:11px;
@@ -198,7 +255,10 @@ h1{
   <p class="presented-by">Presented by Visit Austin &amp; Austin Convention Center</p>
   <div class="divider"></div>
   <div class="search-section" id="searchSection">
-    <p class="search-label">Find your seat</p>
+    <div class="search-tabs">
+      <button class="search-tab active" id="tabName" onclick="switchTab('name')">By Name</button>
+      <button class="search-tab" id="tabHost" onclick="switchTab('host')">By Host</button>
+    </div>
     <div class="search-wrapper">
       <input type="text" class="search-input" id="searchInput"
         placeholder="Enter your name" autocomplete="off" spellcheck="false" />
@@ -227,8 +287,9 @@ h1{
       </div>
     </div>
   </div>
+  <div class="host-results" id="hostResults"></div>
   <div class="no-result" id="noResult">
-    <p>No guest found by that name.<br>Please check with the registration desk.</p>
+    <p>No results found.<br>Please check with the registration desk.</p>
   </div>
   <p class="footer-note">If you need assistance, please see the registration desk</p>
 </div>
@@ -261,9 +322,11 @@ const SAMPLE_GUESTS = [
 ];
 
 let guests=[];
+let searchMode='name';
 const searchInput=document.getElementById('searchInput');
 const suggestionsEl=document.getElementById('suggestions');
 const resultCard=document.getElementById('resultCard');
+const hostResults=document.getElementById('hostResults');
 const noResult=document.getElementById('noResult');
 const resultName=document.getElementById('resultName');
 const rowValue=document.getElementById('rowValue');
@@ -272,19 +335,33 @@ const loadingEl=document.getElementById('loading');
 const errorMsg=document.getElementById('errorMsg');
 let activeSuggestion=-1;
 
+function switchTab(mode){
+  searchMode=mode;
+  document.getElementById('tabName').classList.toggle('active',mode==='name');
+  document.getElementById('tabHost').classList.toggle('active',mode==='host');
+  searchInput.placeholder=mode==='name'?'Enter your name':'Enter host organization';
+  searchInput.value='';
+  resultCard.classList.remove('visible');
+  hostResults.classList.remove('visible');
+  noResult.classList.remove('visible');
+  suggestionsEl.classList.remove('active');
+  suggestionsEl.innerHTML='';
+  searchInput.focus();
+}
+
 async function loadGuests(){
   try{
     if(USE_GOOGLE_SHEETS){
       loadingEl.classList.remove('hidden');
-      const sep=GOOGLE_SHEET_CSV_URL.includes('?')?'&':'?';
-      const response=await fetch(GOOGLE_SHEET_CSV_URL+sep+'_t='+Date.now());
+      var sep=GOOGLE_SHEET_CSV_URL.includes('?')?'&':'?';
+      var response=await fetch(GOOGLE_SHEET_CSV_URL+sep+'_t='+Date.now());
       if(!response.ok) throw new Error('Fetch failed');
-      const csvText=await response.text();
-      const rows=csvText.trim().split('\n');
-      guests=rows.slice(1).map(row=>{
-        const cols=parseCSVRow(row);
+      var csvText=await response.text();
+      var rows=csvText.trim().split('\n');
+      guests=rows.slice(1).map(function(row){
+        var cols=parseCSVRow(row);
         return{name:(cols[0]||'').trim(),row:(cols[1]||'').trim(),table:(cols[2]||'').trim(),org:(cols[3]||'').trim()};
-      }).filter(g=>g.name);
+      }).filter(function(g){return g.name});
       loadingEl.classList.add('hidden');
     }else{
       guests=SAMPLE_GUESTS;
@@ -298,9 +375,9 @@ async function loadGuests(){
 }
 
 function parseCSVRow(row){
-  const result=[];let current='';let inQuotes=false;
-  for(let i=0;i<row.length;i++){
-    const ch=row[i];
+  var result=[];var current='';var inQuotes=false;
+  for(var i=0;i<row.length;i++){
+    var ch=row[i];
     if(inQuotes){
       if(ch==='"'&&row[i+1]==='"'){current+='"';i++;}
       else if(ch==='"'){inQuotes=false;}
@@ -314,36 +391,81 @@ function parseCSVRow(row){
   result.push(current);return result;
 }
 
-searchInput.addEventListener('input',()=>{
-  const query=searchInput.value.trim().toLowerCase();
+searchInput.addEventListener('input',function(){
+  var query=searchInput.value.trim().toLowerCase();
   resultCard.classList.remove('visible');
+  hostResults.classList.remove('visible');
   noResult.classList.remove('visible');
-  if(query.length<2){suggestionsEl.classList.remove('active');suggestionsEl.innerHTML='';return;}
-  const matches=guests.filter(g=>g.name.toLowerCase().includes(query));
-  if(matches.length===0){suggestionsEl.classList.remove('active');suggestionsEl.innerHTML='';noResult.classList.add('visible');return;}
-  if(matches.length===1&&matches[0].name.toLowerCase()===query){showResult(matches[0]);suggestionsEl.classList.remove('active');return;}
+
+  if(query.length<2){
+    suggestionsEl.classList.remove('active');
+    suggestionsEl.innerHTML='';
+    return;
+  }
+
+  if(searchMode==='name'){
+    handleNameSearch(query);
+  }else{
+    handleHostSearch(query);
+  }
+});
+
+function handleNameSearch(query){
+  var matches=guests.filter(function(g){return g.name.toLowerCase().includes(query)});
+  if(matches.length===0){
+    suggestionsEl.classList.remove('active');suggestionsEl.innerHTML='';
+    noResult.classList.add('visible');return;
+  }
+  if(matches.length===1&&matches[0].name.toLowerCase()===query){
+    showResult(matches[0]);suggestionsEl.classList.remove('active');return;
+  }
   activeSuggestion=-1;
-  suggestionsEl.innerHTML=matches.slice(0,20).map((g,i)=>'<div class="suggestion-item" data-index="'+i+'">'+g.name+'</div>').join('');
+  suggestionsEl.innerHTML=matches.slice(0,20).map(function(g,i){
+    return '<div class="suggestion-item" data-index="'+i+'">'+g.name+'</div>';
+  }).join('');
   suggestionsEl.classList.add('active');
-  suggestionsEl.querySelectorAll('.suggestion-item').forEach((el,i)=>{
-    el.addEventListener('click',()=>{showResult(matches[i]);searchInput.value=matches[i].name;suggestionsEl.classList.remove('active');});
+  suggestionsEl.querySelectorAll('.suggestion-item').forEach(function(el,i){
+    el.addEventListener('click',function(){
+      showResult(matches[i]);searchInput.value=matches[i].name;
+      suggestionsEl.classList.remove('active');
+    });
   });
-});
+}
 
-searchInput.addEventListener('keydown',(e)=>{
-  const items=suggestionsEl.querySelectorAll('.suggestion-item');
-  if(!items.length) return;
-  if(e.key==='ArrowDown'){e.preventDefault();activeSuggestion=Math.min(activeSuggestion+1,items.length-1);updateActive(items);}
-  else if(e.key==='ArrowUp'){e.preventDefault();activeSuggestion=Math.max(activeSuggestion-1,0);updateActive(items);}
-  else if(e.key==='Enter'&&activeSuggestion>=0){e.preventDefault();items[activeSuggestion].click();}
-});
+function handleHostSearch(query){
+  // Find unique orgs matching the query
+  var orgSet={};
+  guests.forEach(function(g){
+    if(g.org.toLowerCase().includes(query)){
+      if(!orgSet[g.org]) orgSet[g.org]=[];
+      orgSet[g.org].push(g);
+    }
+  });
+  var orgNames=Object.keys(orgSet);
 
-function updateActive(items){
-  items.forEach((el,i)=>el.classList.toggle('active',i===activeSuggestion));
-  if(items[activeSuggestion]) items[activeSuggestion].scrollIntoView({block:'nearest'});
+  if(orgNames.length===0){
+    suggestionsEl.classList.remove('active');suggestionsEl.innerHTML='';
+    noResult.classList.add('visible');return;
+  }
+
+  // Show org suggestions
+  activeSuggestion=-1;
+  suggestionsEl.innerHTML=orgNames.slice(0,15).map(function(org,i){
+    var count=orgSet[org].length;
+    return '<div class="suggestion-item" data-index="'+i+'">'+org+' <span style="color:var(--gold-muted);font-size:13px">('+count+' guest'+(count!==1?'s':'')+')</span></div>';
+  }).join('');
+  suggestionsEl.classList.add('active');
+  suggestionsEl.querySelectorAll('.suggestion-item').forEach(function(el,i){
+    el.addEventListener('click',function(){
+      showHostResult(orgNames[i],orgSet[orgNames[i]]);
+      searchInput.value=orgNames[i];
+      suggestionsEl.classList.remove('active');
+    });
+  });
 }
 
 function showResult(guest){
+  hostResults.classList.remove('visible');
   resultName.textContent=guest.name;
   var orgEl=document.getElementById('resultOrg');
   orgEl.innerHTML='<span class="result-org-label">Hosted by</span>'+guest.org;
@@ -354,12 +476,58 @@ function showResult(guest){
   suggestionsEl.classList.remove('active');
 }
 
-document.addEventListener('click',(e)=>{
+function showHostResult(orgName,orgGuests){
+  resultCard.classList.remove('visible');
+  noResult.classList.remove('visible');
+
+  // Group guests by table
+  var tables={};
+  orgGuests.forEach(function(g){
+    var key='Table '+g.table;
+    if(!tables[key]) tables[key]={table:g.table,row:g.row,guests:[]};
+    tables[key].guests.push(g);
+  });
+
+  var html='<p class="host-results-title">'+orgName+'</p>';
+  html+='<p class="host-results-subtitle">'+orgGuests.length+' registered guest'+(orgGuests.length!==1?'s':'')+'</p>';
+
+  Object.keys(tables).forEach(function(key){
+    var t=tables[key];
+    html+='<div class="host-table-card">';
+    html+='<div class="host-table-header">';
+    html+='<span class="host-table-label">Table '+t.table+'</span>';
+    html+='<span class="host-table-nums">Row <strong>'+t.row+'</strong></span>';
+    html+='</div>';
+    html+='<ul class="host-guest-list">';
+    t.guests.forEach(function(g){
+      html+='<li class="host-guest-item">'+g.name+'</li>';
+    });
+    html+='</ul></div>';
+  });
+
+  hostResults.innerHTML=html;
+  hostResults.classList.add('visible');
+}
+
+searchInput.addEventListener('keydown',function(e){
+  var items=suggestionsEl.querySelectorAll('.suggestion-item');
+  if(!items.length) return;
+  if(e.key==='ArrowDown'){e.preventDefault();activeSuggestion=Math.min(activeSuggestion+1,items.length-1);updateActive(items);}
+  else if(e.key==='ArrowUp'){e.preventDefault();activeSuggestion=Math.max(activeSuggestion-1,0);updateActive(items);}
+  else if(e.key==='Enter'&&activeSuggestion>=0){e.preventDefault();items[activeSuggestion].click();}
+});
+
+function updateActive(items){
+  items.forEach(function(el,i){el.classList.toggle('active',i===activeSuggestion)});
+  if(items[activeSuggestion]) items[activeSuggestion].scrollIntoView({block:'nearest'});
+}
+
+document.addEventListener('click',function(e){
   if(!e.target.closest('.search-wrapper')) suggestionsEl.classList.remove('active');
 });
 
 loadGuests();
-if(USE_GOOGLE_SHEETS) setInterval(()=>loadGuests(),REFRESH_INTERVAL_MS);
+if(USE_GOOGLE_SHEETS) setInterval(function(){loadGuests()},REFRESH_INTERVAL_MS);
 </script>
 </body>
 </html>
