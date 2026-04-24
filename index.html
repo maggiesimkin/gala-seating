@@ -2,22 +2,26 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0A0A0A">
 <title>PCMA Foundation Visionary Awards - Seating</title>
 <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
   --gold:#D4A843;--gold-bright:#F0C95C;--gold-light:#E8D5A3;--gold-muted:#A68A3E;
   --amber:#C4902A;--black:#0A0A0A;--charcoal:#1C1918;--charcoal-light:#2A2625;
   --white:#FFFFFF;--white-dim:#E8E4DD;--white-muted:#B0AAA0;
 }
+html{-webkit-text-size-adjust:100%}
 body{
   font-family:'DM Sans',sans-serif;
   background:var(--black);
   color:var(--white);
   min-height:100vh;
+  min-height:100dvh;
   overflow-x:hidden;
+  overscroll-behavior-y:none;
 }
 .page-bg{
   position:fixed;inset:0;pointer-events:none;z-index:0;
@@ -34,7 +38,11 @@ body{
 }
 .container{
   position:relative;z-index:1;max-width:560px;margin:0 auto;
-  padding:50px 24px 80px;min-height:100vh;
+  padding:50px 24px 80px;
+  padding-left:max(24px,env(safe-area-inset-left));
+  padding-right:max(24px,env(safe-area-inset-right));
+  padding-bottom:max(80px,env(safe-area-inset-bottom));
+  min-height:100vh;min-height:100dvh;
   display:flex;flex-direction:column;align-items:center;
 }
 .brand-label{
@@ -54,14 +62,9 @@ h1{
   letter-spacing:3px;color:var(--gold-light);margin-top:10px;text-align:center;
   opacity:0;animation:fadeUp .7s ease .4s forwards;
 }
-.presented-by{
-  font-family:'DM Sans',sans-serif;font-weight:400;font-size:12px;
-  letter-spacing:3px;text-transform:uppercase;color:var(--white-muted);margin-top:8px;
-  opacity:0;animation:fadeUp .7s ease .5s forwards;
-}
 .divider{
-  width:60px;height:1px;margin:32px auto;position:relative;
-  opacity:0;animation:fadeUp .7s ease .55s forwards;
+  width:60px;height:1px;margin:28px auto;position:relative;
+  opacity:0;animation:fadeUp .7s ease .5s forwards;
 }
 .divider::before{
   content:'';position:absolute;inset:0;
@@ -69,7 +72,7 @@ h1{
 }
 .search-section{
   width:100%;text-align:center;
-  opacity:0;animation:fadeUp .7s ease .65s forwards;
+  opacity:0;animation:fadeUp .7s ease .6s forwards;
 }
 .search-label{
   font-family:'DM Sans',sans-serif;font-weight:400;font-size:13px;
@@ -82,6 +85,7 @@ h1{
   color:var(--white);background:rgba(255,255,255,0.04);
   border:1px solid rgba(212,168,67,0.25);border-radius:2px;
   outline:none;transition:all .4s ease;letter-spacing:.5px;text-align:center;
+  -webkit-appearance:none;appearance:none;
 }
 .search-input::placeholder{color:rgba(255,255,255,0.2);font-style:italic}
 .search-input:focus{
@@ -138,19 +142,20 @@ h1{
   width:100%;background:var(--charcoal);
   border:1px solid rgba(212,168,67,0.15);border-top:none;
   border-radius:0 0 2px 2px;max-height:240px;overflow-y:auto;display:none;
+  -webkit-overflow-scrolling:touch;
 }
 .suggestions.active{display:block}
 .suggestion-item{
-  padding:14px 24px;font-family:'DM Sans',sans-serif;font-size:17px;
-  cursor:pointer;transition:all .2s ease;
+  padding:16px 24px;font-family:'DM Sans',sans-serif;font-size:17px;
+  cursor:pointer;transition:all .2s ease;min-height:48px;
   border-bottom:1px solid rgba(255,255,255,0.03);text-align:center;color:var(--white-dim);
 }
 .suggestion-item:hover,.suggestion-item.active{
   background:rgba(212,168,67,0.08);color:var(--gold-bright);
 }
 .suggestion-item:last-child{border-bottom:none}
-.no-result{text-align:center;margin-top:36px;opacity:0;transition:opacity .4s ease}
-.no-result.visible{opacity:1}
+.no-result{text-align:center;margin-top:36px;display:none}
+.no-result.visible{display:block;animation:fadeUp .4s ease forwards}
 .no-result p{
   font-family:'Cormorant Garamond',serif;font-size:18px;
   color:var(--white-muted);font-style:italic;line-height:1.6;
@@ -177,7 +182,7 @@ h1{
   font-family:'DM Sans',sans-serif;font-weight:500;font-size:12px;
   letter-spacing:2px;text-transform:uppercase;
   color:var(--white-muted);background:transparent;
-  border:none;padding:10px 24px;cursor:pointer;
+  border:none;padding:12px 24px;cursor:pointer;min-height:44px;
   transition:all .3s ease;flex:1;
 }
 .search-tab:hover{color:var(--gold-light)}
@@ -219,7 +224,7 @@ h1{
 .host-guest-list{list-style:none;padding:0;margin:0}
 .host-guest-item{
   font-family:'DM Sans',sans-serif;font-size:14px;font-weight:400;
-  color:var(--white-dim);padding:6px 0;
+  color:var(--white-dim);padding:8px 0;
   border-bottom:1px solid rgba(255,255,255,0.03);
 }
 .host-guest-item:last-child{border-bottom:none}
@@ -227,7 +232,7 @@ h1{
   font-size:12px;color:var(--white-muted);margin-left:8px;
 }
 .footer-note{
-  padding-top:40px;text-align:center;
+  padding-top:20px;margin-top:8px;text-align:center;
   font-family:'DM Sans',sans-serif;font-weight:400;font-size:14px;
   font-style:italic;letter-spacing:.5px;
   color:rgba(255,255,255,0.4);
@@ -240,10 +245,27 @@ h1{
 .suggestions::-webkit-scrollbar{width:4px}
 .suggestions::-webkit-scrollbar-track{background:var(--charcoal)}
 .suggestions::-webkit-scrollbar-thumb{background:rgba(212,168,67,0.25);border-radius:2px}
-@media(max-width:420px){
-  .container{padding:40px 18px 60px}
-  .assignment{padding:24px 12px}
+@media(max-width:480px){
+  .container{padding:36px 18px 60px}
+  .brand-label{letter-spacing:4px;font-size:12px}
+  .event-meta{letter-spacing:2px;font-size:14px}
+  .divider{margin:24px auto}
+  .search-input{padding:14px 18px;font-size:20px}
+  .assignment{padding:24px 10px}
   .assignment-value{font-size:36px}
+  .assignment-label{letter-spacing:2px;font-size:10px}
+  .assignment-type{letter-spacing:2px;font-size:11px}
+  .result-name{font-size:22px}
+  .host-table-card{padding:16px}
+  .footer-note{font-size:13px;padding-top:16px}
+}
+@media(max-width:360px){
+  .container{padding:28px 14px 50px}
+  .brand-label{letter-spacing:3px;font-size:11px}
+  .event-meta{letter-spacing:1.5px;font-size:13px}
+  .assignment{padding:20px 8px}
+  .assignment-value{font-size:32px}
+  .search-tab{padding:10px 12px;font-size:11px;letter-spacing:1.5px}
 }
 </style>
 </head>
@@ -253,7 +275,6 @@ h1{
   <p class="brand-label">PCMA Foundation</p>
   <h1>Visionary Awards</h1>
   <p class="event-meta">May 7, 2026 &ensp;|&ensp; Washington, DC</p>
-  <p class="presented-by">Presented by Visit Austin &amp; Austin Convention Center</p>
   <div class="divider"></div>
   <div class="search-section" id="searchSection">
     <div class="search-tabs">
@@ -262,7 +283,8 @@ h1{
     </div>
     <div class="search-wrapper">
       <input type="text" class="search-input" id="searchInput"
-        placeholder="Enter your name" autocomplete="off" spellcheck="false" />
+        placeholder="Enter your name" autocomplete="off" spellcheck="false"
+        autocapitalize="words" enterkeyhint="search" />
       <div class="suggestions" id="suggestions"></div>
     </div>
     <div class="loading hidden" id="loading"><p>Loading guest list...</p></div>
@@ -298,7 +320,6 @@ h1{
 const USE_GOOGLE_SHEETS = false;
 const GOOGLE_SHEET_CSV_URL = 'YOUR_PUBLISHED_CSV_URL_HERE';
 const REFRESH_INTERVAL_MS = 60000;
-
 const SAMPLE_GUESTS = [
   {name:"Alexander Bennett",row:"A",table:"1",org:"Hilton"},
   {name:"Amelia Thornton",row:"A",table:"1",org:"Hilton"},
@@ -321,7 +342,6 @@ const SAMPLE_GUESTS = [
   {name:"Samuel Blackwood",row:"G",table:"10",org:"Las Vegas Convention and Visitors Authority"},
   {name:"Victoria Langley",row:"G",table:"10",org:"Las Vegas Convention and Visitors Authority"}
 ];
-
 let guests=[];
 let searchMode='name';
 const searchInput=document.getElementById('searchInput');
@@ -335,7 +355,6 @@ const tableValue=document.getElementById('tableValue');
 const loadingEl=document.getElementById('loading');
 const errorMsg=document.getElementById('errorMsg');
 let activeSuggestion=-1;
-
 function switchTab(mode){
   searchMode=mode;
   document.getElementById('tabName').classList.toggle('active',mode==='name');
@@ -349,7 +368,6 @@ function switchTab(mode){
   suggestionsEl.innerHTML='';
   searchInput.focus();
 }
-
 async function loadGuests(){
   try{
     if(USE_GOOGLE_SHEETS){
@@ -374,7 +392,6 @@ async function loadGuests(){
     errorMsg.style.display='block';
   }
 }
-
 function parseCSVRow(row){
   var result=[];var current='';var inQuotes=false;
   for(var i=0;i<row.length;i++){
@@ -391,26 +408,22 @@ function parseCSVRow(row){
   }
   result.push(current);return result;
 }
-
 searchInput.addEventListener('input',function(){
   var query=searchInput.value.trim().toLowerCase();
   resultCard.classList.remove('visible');
   hostResults.classList.remove('visible');
   noResult.classList.remove('visible');
-
   if(query.length<2){
     suggestionsEl.classList.remove('active');
     suggestionsEl.innerHTML='';
     return;
   }
-
   if(searchMode==='name'){
     handleNameSearch(query);
   }else{
     handleHostSearch(query);
   }
 });
-
 function handleNameSearch(query){
   var matches=guests.filter(function(g){return g.name.toLowerCase().includes(query)});
   if(matches.length===0){
@@ -432,9 +445,7 @@ function handleNameSearch(query){
     });
   });
 }
-
 function handleHostSearch(query){
-  // Find unique orgs matching the query
   var orgSet={};
   guests.forEach(function(g){
     if(g.org.toLowerCase().includes(query)){
@@ -443,13 +454,10 @@ function handleHostSearch(query){
     }
   });
   var orgNames=Object.keys(orgSet);
-
   if(orgNames.length===0){
     suggestionsEl.classList.remove('active');suggestionsEl.innerHTML='';
     noResult.classList.add('visible');return;
   }
-
-  // Show org suggestions
   activeSuggestion=-1;
   suggestionsEl.innerHTML=orgNames.slice(0,15).map(function(org,i){
     var count=orgSet[org].length;
@@ -464,7 +472,6 @@ function handleHostSearch(query){
     });
   });
 }
-
 function showResult(guest){
   hostResults.classList.remove('visible');
   resultName.textContent=guest.name;
@@ -476,22 +483,17 @@ function showResult(guest){
   noResult.classList.remove('visible');
   suggestionsEl.classList.remove('active');
 }
-
 function showHostResult(orgName,orgGuests){
   resultCard.classList.remove('visible');
   noResult.classList.remove('visible');
-
-  // Group guests by table
   var tables={};
   orgGuests.forEach(function(g){
     var key='Table '+g.table;
     if(!tables[key]) tables[key]={table:g.table,row:g.row,guests:[]};
     tables[key].guests.push(g);
   });
-
   var html='<p class="host-results-title">'+orgName+'</p>';
   html+='<p class="host-results-subtitle">'+orgGuests.length+' registered guest'+(orgGuests.length!==1?'s':'')+'</p>';
-
   Object.keys(tables).forEach(function(key){
     var t=tables[key];
     html+='<div class="host-table-card">';
@@ -505,11 +507,9 @@ function showHostResult(orgName,orgGuests){
     });
     html+='</ul></div>';
   });
-
   hostResults.innerHTML=html;
   hostResults.classList.add('visible');
 }
-
 searchInput.addEventListener('keydown',function(e){
   var items=suggestionsEl.querySelectorAll('.suggestion-item');
   if(!items.length) return;
@@ -517,16 +517,13 @@ searchInput.addEventListener('keydown',function(e){
   else if(e.key==='ArrowUp'){e.preventDefault();activeSuggestion=Math.max(activeSuggestion-1,0);updateActive(items);}
   else if(e.key==='Enter'&&activeSuggestion>=0){e.preventDefault();items[activeSuggestion].click();}
 });
-
 function updateActive(items){
   items.forEach(function(el,i){el.classList.toggle('active',i===activeSuggestion)});
   if(items[activeSuggestion]) items[activeSuggestion].scrollIntoView({block:'nearest'});
 }
-
 document.addEventListener('click',function(e){
   if(!e.target.closest('.search-wrapper')) suggestionsEl.classList.remove('active');
 });
-
 loadGuests();
 if(USE_GOOGLE_SHEETS) setInterval(function(){loadGuests()},REFRESH_INTERVAL_MS);
 </script>
