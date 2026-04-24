@@ -133,7 +133,10 @@ h1{
   font-family:'Gabarito',sans-serif;font-size:44px;font-weight:600;
   color:var(--gold-bright);line-height:1;
   text-shadow:0 0 30px rgba(240,201,92,0.15);
+  word-break:break-word;
 }
+.assignment-value.medium{font-size:30px;line-height:1.1}
+.assignment-value.long{font-size:22px;line-height:1.2;letter-spacing:.5px}
 .assignment-type{
   font-family:'DM Sans',sans-serif;font-weight:400;font-size:12px;
   letter-spacing:3px;text-transform:uppercase;color:var(--white-muted);margin-top:8px;
@@ -253,6 +256,8 @@ h1{
   .search-input{padding:14px 18px;font-size:20px}
   .assignment{padding:24px 10px}
   .assignment-value{font-size:36px}
+  .assignment-value.medium{font-size:24px}
+  .assignment-value.long{font-size:18px}
   .assignment-label{letter-spacing:2px;font-size:10px}
   .assignment-type{letter-spacing:2px;font-size:11px}
   .result-name{font-size:22px}
@@ -317,8 +322,8 @@ h1{
   <p class="footer-note">If you need assistance, please see the registration desk.</p>
 </div>
 <script>
-const USE_GOOGLE_SHEETS = false;
-const GOOGLE_SHEET_CSV_URL = 'YOUR_PUBLISHED_CSV_URL_HERE';
+const USE_GOOGLE_SHEETS = true;
+const GOOGLE_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTGyWs_HDe-c9s8OsF7RuBHbmJ-pG-ALpqGeTpayfHapV7n4HThj3VrvauMilIh9jyqIl2vE2DwWPbg/pub?gid=1288319416&single=true&output=csv';
 const REFRESH_INTERVAL_MS = 60000;
 const SAMPLE_GUESTS = [
   {name:"Alexander Bennett",row:"A",table:"1",org:"Hilton"},
@@ -472,13 +477,20 @@ function handleHostSearch(query){
     });
   });
 }
+function setAssignmentValue(el,val){
+  el.textContent=val;
+  el.classList.remove('medium','long');
+  var len=(val||'').length;
+  if(len>5){el.classList.add('long');}
+  else if(len>2){el.classList.add('medium');}
+}
 function showResult(guest){
   hostResults.classList.remove('visible');
   resultName.textContent=guest.name;
   var orgEl=document.getElementById('resultOrg');
   orgEl.innerHTML='<span class="result-org-label">Hosted by</span>'+guest.org;
-  rowValue.textContent=guest.row;
-  tableValue.textContent=guest.table;
+  setAssignmentValue(rowValue,guest.row);
+  setAssignmentValue(tableValue,guest.table);
   resultCard.classList.add('visible');
   noResult.classList.remove('visible');
   suggestionsEl.classList.remove('active');
