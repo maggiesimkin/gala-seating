@@ -490,6 +490,7 @@ function showResult(guest){
   hostResults.classList.remove('visible');
   resultName.textContent=guest.name;
   var orgEl=document.getElementById('resultOrg');
+  orgEl.style.display='block';
   orgEl.innerHTML='<span class="result-org-label">Hosted by</span>'+guest.org;
   setAssignmentValue(rowValue,guest.row);
   setAssignmentValue(tableValue,guest.table);
@@ -498,31 +499,18 @@ function showResult(guest){
   suggestionsEl.classList.remove('active');
 }
 function showHostResult(orgName,orgGuests){
-  resultCard.classList.remove('visible');
+  hostResults.classList.remove('visible');
+  hostResults.innerHTML='';
+  resultName.textContent=orgName;
+  var orgEl=document.getElementById('resultOrg');
+  orgEl.innerHTML='';
+  orgEl.style.display='none';
+  var first=orgGuests[0];
+  setAssignmentValue(rowValue,first.row);
+  setAssignmentValue(tableValue,first.table);
+  resultCard.classList.add('visible');
   noResult.classList.remove('visible');
-  var tables={};
-  orgGuests.forEach(function(g){
-    var key='Table '+g.table;
-    if(!tables[key]) tables[key]={table:g.table,row:g.row,guests:[]};
-    tables[key].guests.push(g);
-  });
-  var html='<p class="host-results-title">'+orgName+'</p>';
-  html+='<p class="host-results-subtitle">'+orgGuests.length+' registered guest'+(orgGuests.length!==1?'s':'')+'</p>';
-  Object.keys(tables).forEach(function(key){
-    var t=tables[key];
-    html+='<div class="host-table-card">';
-    html+='<div class="host-table-header">';
-    html+='<span class="host-table-label">Table '+t.table+'</span>';
-    html+='<span class="host-table-nums">Row <strong>'+t.row+'</strong></span>';
-    html+='</div>';
-    html+='<ul class="host-guest-list">';
-    t.guests.forEach(function(g){
-      html+='<li class="host-guest-item">'+g.name+'</li>';
-    });
-    html+='</ul></div>';
-  });
-  hostResults.innerHTML=html;
-  hostResults.classList.add('visible');
+  suggestionsEl.classList.remove('active');
 }
 searchInput.addEventListener('keydown',function(e){
   var items=suggestionsEl.querySelectorAll('.suggestion-item');
