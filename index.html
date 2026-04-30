@@ -467,8 +467,7 @@ function handleHostSearch(query){
   }
   activeSuggestion=-1;
   suggestionsEl.innerHTML=orgNames.slice(0,15).map(function(org,i){
-    var count=orgSet[org].length;
-    return '<div class="suggestion-item" data-index="'+i+'">'+org+' <span style="color:var(--gold-muted);font-size:13px">('+count+' guest'+(count!==1?'s':'')+')</span></div>';
+    return '<div class="suggestion-item" data-index="'+i+'">'+org+'</div>';
   }).join('');
   suggestionsEl.classList.add('active');
   suggestionsEl.querySelectorAll('.suggestion-item').forEach(function(el,i){
